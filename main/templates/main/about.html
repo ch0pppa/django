@@ -1,17 +1,65 @@
 {% extends "main/base.html" %}
-
 {% load static %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">    
+<link rel="stylesheet" href="{% static 'deps/css/my_footer_css.css' %}">
+<style>
+    /* Стили для виджета чата */
+    .chat-widget-container {
+        margin: 30px auto;
+        max-width: 800px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    elevenlabs-convai {
+        width: 100%;
+        height: 600px;
+        display: block;
+    }
+    
+    @media (max-width: 768px) {
+        elevenlabs-convai {
+            height: 500px;
+        }
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-    <div class="mt-5 pt-5 bg-white custom-shadow rounded">
-        <h2 ><strong>{{ content }}</strong></h2>
-        <p> {{ text_on_page}} </p>
+<div class="mt-5 pt-5 bg-white custom-shadow rounded">
+    <h2 class="text-center mb-4"><strong>{{ content }}</strong></h2>
+    <p class="lead text-center mb-5">{{ text_on_page }}</p>
+    
+    <!-- Контейнер для виджета с пояснением -->
+    <div class="chat-widget-container">
+        <h3 class="text-center mb-3">Наш виртуальный помощник</h3>
+        <p class="text-center text-muted mb-4">Задайте любой вопрос нашему AI-ассистенту</p>
+        <elevenlabs-convai 
+            agent-id="2Z4GUrI2wwqbwSehUdwQ"
+            theme="light"
+            chat-title="AI Помощник"
+            avatar-position="left"
+        ></elevenlabs-convai>
     </div>
-    {% endblock %}
+</div>
+
+<!-- Скрипт виджета с обработкой ошибок -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const script = document.createElement('script');
+        script.src = "https://elevenlabs.io/convai-widget/index.js";
+        script.async = true;
+        script.onerror = function() {
+            console.error('Ошибка загрузки виджета ElevenLabs');
+            document.querySelector('.chat-widget-container').innerHTML = 
+                '<div class="alert alert-warning text-center">Чат-бот временно недоступен. Пожалуйста, попробуйте позже.</div>';
+        };
+        document.body.appendChild(script);
+    });
+</script>
+{% endblock %}
 
 {% block footer %}
 <footer class="py-4 bg-dark">
