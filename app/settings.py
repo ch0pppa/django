@@ -15,7 +15,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
-from django.conf.global_settings import INTERNAL_IPS, STATICFILES_DIRS
+from django.conf.global_settings import INTERNAL_IPS, MEDIA_ROOT, STATICFILES_DIRS
 from django.contrib import staticfiles
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     
     'main',
     'goods',
+
 ]
 
 MIDDLEWARE = [
@@ -134,6 +135,10 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS: list = [
     BASE_DIR / 'static'
 ]
+
+MEDIA_URL = 'media/'
+
+MEDIA_ROOT = BASE_DIR / 'media'
 
 INTERNAL_IPS = [
     # ...

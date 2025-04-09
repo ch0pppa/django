@@ -18,8 +18,8 @@ from doctest import debug
 from re import DEBUG
 from django.contrib import admin
 from django.urls import include, path
-from app.settings import DEBUG
-from main import views
+from app import settings
+from django.conf.urls.static import static  
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,7 +30,9 @@ urlpatterns = [
 if DEBUG:
     urlpatterns += [
         path("__debug__/", include("debug_toolbar.urls")),
+        
     ]
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 """
 www.site.com/admin/
 www.site.com
