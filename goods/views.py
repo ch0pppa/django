@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.template import context
 
 from goods.models import Products
@@ -11,9 +11,11 @@ def about_view(request):
     }
     return render(request, 'main/about.html', context)
 
-def catalog(request):
-    
-    goods = Products.objects.all()
+def catalog(request, category_slug):
+    if category_slug == 'all':
+        goods = Products.objects.all()
+    else:
+        goods = get_object_or_404(Products.objects.filter(category__slug=category_slug)) 
     
     context = {   
         'title': 'Home - Каталог',
